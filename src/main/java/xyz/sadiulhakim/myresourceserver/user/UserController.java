@@ -1,5 +1,7 @@
 package xyz.sadiulhakim.myresourceserver.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +19,9 @@ import java.util.Map;
 public class UserController {
     private static List<User> users = new ArrayList<>();
 
+    @Autowired
+    private Environment env;
+
     static {
         users.add(new User("Hakim", "hakim@gmail.com", 21));
         users.add(new User("Ashik", "ashik@gmail.com", 30));
@@ -25,7 +30,7 @@ public class UserController {
 
     @GetMapping("/")
     public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok("Working on port: " + env.getProperty("local.server.port"));
     }
 
     @GetMapping("/authenticated")
